@@ -6,7 +6,6 @@ type ProfileProps ={
 }
 export default function Profile({name}: ProfileProps) {
     const initial = name?.split(" ")[0].slice(0,1);
-    console.log(initial)
     return (
         <div>
             <div className={styles.profile}>

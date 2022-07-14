@@ -22,3 +22,8 @@
     padding: 0 5em;
     
 }
+@media screen and (max-width:1300px){
+    .transact_body_inner{
+        width: 95%;
+    }
+}

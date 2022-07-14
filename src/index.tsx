@@ -5,15 +5,18 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { ApolloProvider } from "@apollo/client";
 import client from "./utils/apollo-client";
+import { TransactionContextProvider } from "./context/TransactionContext";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <ApolloProvider client={client}>
-      <App />
-    </ApolloProvider>
+    <TransactionContextProvider>
+      <ApolloProvider client={client}>
+        <App />
+      </ApolloProvider>
+    </TransactionContextProvider>
   </React.StrictMode>
 );
 

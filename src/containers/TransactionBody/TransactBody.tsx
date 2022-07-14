@@ -1,33 +1,25 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { useGetTransactions } from "../../graphql/hooks/useGetTransactions";
 import DropDown from "../../components/DropDown/DropDown";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import styles from "./TransactBody.module.css";
-import { dateComparison, dateFormatter } from "../../utils";
+import { dateFormatter } from "../../utils";
 import TransactCard from "../TransactCard/TransactCard";
+import { transactionTypes } from "../../types";
+import { TransactionContext } from "../../context/TransactionContext";
 
-type transactionTypes = {
-  id: string;
-  date: string;
-  transactions: {
-    id: string;
-    status: string;
-    name: string;
-    accountNumber: string;
-    email: string;
-    type: "credit" | "debit";
-  }[];
-};
+
 export default function TransactBody() {
   const { error, loading, data } = useGetTransactions();
+  const {transactSearchResults, setTransactSearchResults, setTransactions} = useContext(TransactionContext);
   useEffect(() => {
     if (error) {
-      console.log(error);
+     throw error;
     } else {
-      // data?.Transactions?.sort(dateComparison);
-      console.log(data);
+      setTransactions(data?.Transactions);
+      setTransactSearchResults(data?.Transactions);
     }
-  }, [data]);
+  }, [data, setTransactSearchResults, setTransactions, error]);
   return (
     <div className={styles.transact_body_wrapper}>
       <div className={styles.transact_body_inner}>
@@ -44,12 +36,14 @@ export default function TransactBody() {
           <div className={`flex ${styles.filters}`}>
             <div>
               <DropDown
+                type="type"
                 title="All Payments"
                 list_items={["All Payments", "Credit", "Debit"]}
               />
             </div>
             <div>
               <DropDown
+                type="status"
                 title="All Statuses"
                 list_items={["All Statuses", "Successful", "Pending", "Failed"]}
               />
@@ -62,7 +56,7 @@ export default function TransactBody() {
               Loading...
             </div>
           ) : (
-            data?.Transactions?.map(
+            transactSearchResults?.map(
               (transaction: transactionTypes, index: number) => (
                 <div key={transaction.id} className={` my-5 ${styles.transact_item}`}>
                   <section>
@@ -72,7 +66,7 @@ export default function TransactBody() {
                     <table className={`${styles.transact_card}`}>
                       <thead></thead>
                       <tbody>
-                        {transaction?.transactions?.map((item, index) => (
+                        {transaction?.transactions?.map((item) => (
                           <TransactCard key={item.id} details={item} />
                         ))}
                       </tbody>

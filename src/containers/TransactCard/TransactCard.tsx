@@ -16,19 +16,33 @@ interface TransactCardProps {
 export default function TransactCard({ details }: TransactCardProps) {
   return (
     <tr className={`h-16 ${styles.transact_row}`}>
-      <td colSpan={1}>
+      <td className={`px-4`} colSpan={1}>
         <Profile name={details?.name} />
       </td>
-      <td >
-        {details.name}
+      <td colSpan={1} className={`px-3`}>
+        <h3>{details.name}</h3>
       </td>
-      <td>{details.accountNumber}</td>
-      <td>
-        <h3>{details.email}</h3>
+      <td className={`px-4 hidden sm:hidden md:table-cell` } colSpan={1}>
+        <h3>{details.accountNumber}</h3>
       </td>
-      <td className={`font-medium ${styles[details.status.toLowerCase()]}`}>{details.status}</td>
-      
-      <td className={`font-medium ${styles[details.type.toLowerCase()]}`}>{details.type}</td>
+      <td colSpan={1} className={`hidden sm:hidden lg:table-cell md:hidden`}>
+        <h3 className={`px-2`}>{details.email}</h3>
+      </td>
+      <td
+        colSpan={1}
+        className={`font-medium px-5 ${styles[details.status.toLowerCase()]}`}
+      >
+        {details.status}
+      </td>
+
+      <td
+        colSpan={1}
+        className={`font-medium hidden sm:inline  ${
+          styles[details.type.toLowerCase()]
+        }`}
+      >
+        <h3 className={`px-4`}>{details.type}</h3>
+      </td>
     </tr>
   );
 }
