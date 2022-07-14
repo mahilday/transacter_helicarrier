@@ -1,0 +1,24 @@
+.transact_body_wrapper{
+    width: 100%
+}
+.transact_body_inner{
+    width: 80%;
+    margin: 0 auto;
+}
+.filters{
+    width: max-content;
+    height: 6em;
+    display: flex;
+    align-items: center;
+    border-top: 0.4px solid #dfdfdf;
+}
+.filters>div{
+    margin-right: 2vw;
+    cursor: pointer;
+}
+.transact_card{
+    width:100%;
+    margin: 2em 0;
+    padding: 0 5em;
+    
+}

@@ -1,0 +1,16 @@
+type Transaction {
+  id: ID!
+  status: String @examples(values: ["Successful", "Failed", "Pending"])
+  name: String @fake(type: fullName)
+  email: String @fake(type: email)
+  type: String @examples(values: ["Credit", "Debit"])
+  accountNumber: String @fake(type: bankAccountNumber)
+}
+type TransactionPeriod {
+  id: ID!
+  date: String! @fake(type: pastDate)
+  transactions: [Transaction!] @listLength(min: 20, max: 20)
+}
+type Query {
+  Transactions: [TransactionPeriod!] @listLength(min: 5, max: 5)
+}

@@ -1,0 +1,15 @@
+.transact_row{
+    border-bottom: 0.6px solid #dfdfdf;
+}
+.successful{
+    color: #2d9c49;
+}
+.pending{
+    color: #c5a31a;
+}
+.failed{
+    color: #e74c3c;
+}
+.credit{
+    color: #076396;
+}

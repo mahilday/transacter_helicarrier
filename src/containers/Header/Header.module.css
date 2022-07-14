@@ -1,0 +1,26 @@
+.header_wrapper{
+    width: 100%;
+    height: 8vh;
+    border-bottom: 0.4px solid #dfdfdf;
+}
+.header_inner{
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.header_logo{
+    width: 7em;
+}
+.inner_nav ul{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.inner_nav ul >li{
+    margin: 0 40px;
+    font-size: 14px;
+}

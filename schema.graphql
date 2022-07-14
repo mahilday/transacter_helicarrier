@@ -1,0 +1,29 @@
+# This is sample SDL schema for GraphQL Faker.
+#
+# There are two directives you can use to enhance fake data:
+#   - @fake
+#   - @examples
+# Each directive has autocompletion working so start by typing @
+#
+# Press save or Cmd+Enter to apply the changes and update server. Switch to GraphiQL
+# on the left panel to immediately test your changes.
+# This tool also supports extending existing APIs. Check graphql-faker --help
+#
+# Developed with ❤️ by APIs.guru | https://github.com/APIs-guru/graphql-faker
+
+type Transaction{
+    id:ID!
+    status: String @examples(values: ["Successful", "Failed", "Pending"])
+    name: String @fake(type: fullName)
+    email: String @fake(type: email)
+    type: String @examples(values: ["Credit", "Debit"])
+    accountNumber: String @fake(type: internationalBankAccountNumber)
+}
+type TransactionPeriod{
+    id: ID!
+    date: String @fake(type: pastDate)
+    transactions: [Transaction!] @listLength(min: 20, max:20)
+}
+type Query{
+    Transactions: [TransactionPeriod!] @listLength(min: 5, max:5)
+}
