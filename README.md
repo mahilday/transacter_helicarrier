@@ -34,7 +34,7 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 
 Transacter was made to show transaction history of a user. I utilized the structure given to me although I think there are certain improvements that can be made, they are:
 
-1. I think the data should be paginated.
+1. Data pagination.
 
 2. The date should either be a filter or just a dropdown where the user can easily pick a period and the transactions will render.
 
