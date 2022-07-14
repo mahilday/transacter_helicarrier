@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { TransactionContext } from "../../context/TransactionContext";
 import styles from "./DropDown.module.css";
 
@@ -15,8 +15,6 @@ export default function DropDown({ type, title, list_items }: DropDownProps) {
     setTransactFilters,
   } = React.useContext(TransactionContext);
   let searchResults = transactions;
-  let transactArr: any = [];
-
 
   const [chosenTitle, setTitle] = useState(title);
   const [isOpen, setIsOpen] = useState(false);
@@ -26,25 +24,47 @@ export default function DropDown({ type, title, list_items }: DropDownProps) {
     filter = item;
     let filtersCopy = { ...transactFilters };
     filtersCopy[type] = filter;
-    setTransactFilters({ ...filtersCopy });
+
+    const newFilters = filtersCopy;
+    setTransactFilters({ ...newFilters });
+  };
+
+  useEffect(() => {
+    let transactArr: any = [];
 
     for (let i = 0; i < searchResults?.length; i++) {
       let filteredTransact = searchResults[i]?.transactions?.filter(
         (transact: any) => {
-          return (
-            transact.status.toLowerCase() ===
-            transactFilters.status.toLowerCase()
-          );
+          let newFilter = transactFilters;
+          if (
+            newFilter.type.toLowerCase() !== "all payments" &&
+            newFilter.status.toLowerCase() !== "all statuses"
+          ) {
+            return (
+              transact.type.toLowerCase() === newFilter.type.toLowerCase() &&
+              transact.status.toLowerCase() === newFilter.status.toLowerCase()
+            );
+          } else if (
+            newFilter.type.toLowerCase() === "all payments" &&
+            newFilter.status.toLowerCase() === "all statuses"
+          ) {
+            return transactions;
+          } else {
+            return (
+              transact.type.toLowerCase() === newFilter.type.toLowerCase() ||
+              transact.status.toLowerCase() === newFilter.status.toLowerCase()
+            );
+          }
         }
       );
 
       let transactCopy: any = { ...searchResults[i] };
       transactCopy.transactions = filteredTransact;
       transactArr.push({ ...transactCopy });
-    
     }
     setTransactSearchResults([...transactArr]);
-  };
+  }, [transactFilters, setTransactSearchResults, searchResults, transactions]);
+
 
   const handleDropdown = () => {
     setIsOpen(!isOpen);
@@ -57,7 +77,7 @@ export default function DropDown({ type, title, list_items }: DropDownProps) {
             onClick={handleDropdown}
             className={`flex items-center ${styles.drop_pill}`}
           >
-            <h1>{chosenTitle}</h1>
+            <h1>{transactFilters[type]}</h1>
             <div
               className={`ml-5 flex items-center ${
                 isOpen === true ? "rotate" : "noRotate"

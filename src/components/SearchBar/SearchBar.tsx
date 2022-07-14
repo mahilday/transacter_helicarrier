@@ -3,16 +3,16 @@ import { TransactionContext } from "../../context/TransactionContext";
 import styles from "./SearchBar.module.css";
 
 export default function SearchBar() {
-  const { transactions, setTransactSearchResults } =
+  const { transactions,  setTransactSearchResults } =
     React.useContext(TransactionContext);
   let searchInput = "";
   let searchResults = transactions;
 
   let transactArr: any = [];
 
-  const reset =()=>{
-    transactArr = []
-  }
+  const reset = () => {
+    transactArr = [];
+  };
 
   const handleSearchInput = (e: any) => {
     reset();
@@ -31,7 +31,7 @@ export default function SearchBar() {
         (transact: any) => {
           return (
             transact?.name.toLowerCase().match(regex) ||
-            transact?.accountNumber.match(regex)
+            transact?.accountNumber.match(regex) || transact?.email.toLowerCase().match(regex)
           );
         }
       );
@@ -42,7 +42,6 @@ export default function SearchBar() {
     setTransactSearchResults([...transactArr]);
   };
 
-  
   return (
     <div>
       <section className={styles.search_bar_top}>
@@ -55,9 +54,9 @@ export default function SearchBar() {
           <div className={styles.search_bar_inner}>
             <input
               type="text"
-              placeholder="Search by date, account number or name"
+              placeholder="Search by email, account number or name"
               onKeyUp={handleSearchInput}
-              onKeyDown = {handleSearchInput}
+              onKeyDown={handleSearchInput}
             />
           </div>
         </div>
